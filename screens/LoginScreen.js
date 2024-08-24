@@ -6,38 +6,44 @@ import CustomButton from '../components/CustomButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { logIn } from '../utils/auth';
 
 const LoginScreen = () => {
     const [form, setForm] = useState({ email: '', password: '' });
     const [isLogin, setIsLogin] = useState(false);
     const navigation = useNavigation();
-
-    const validateEmail = (email) => {
-        return /\S+@\S+\.\S+/.test(email);
-    };
-
-    const handleLogin = () => {
-        if (!validateEmail(form.email)) {
-            Alert.alert('Invalid email format');
+    
+    const handleLogin = async () => {
+        if (form.email === '' || form.password === '') {
+            Alert.alert('Error', 'Please fill in all the fields');
             return;
         }
 
-        if (form.password.length < 6) {
-            Alert.alert('Password must be at least 6 characters');
-            return;
-        }
+        const result = await logIn(form.email, form.password);
+        setIsLogin(true);
+        try{
+            setIsLogin(false);
+            if (result.success) {
+                navigation.navigate('Home');
+            } else {
+                Alert.alert('Error', result.message);
+            }
+        
+        } catch (error) {
+            setIsLogin(false);
+            Alert.alert('Error', error.message);
 
-        navigation.navigate('Home');
-    };
+        }
+          };
 
     return (
-        <SafeAreaView>
-            <ScrollView contentContainerStyle={{ height: '100%' }}>
+        <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView  contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
                 <View style={mainStyles.mainContainer}>
-                    <View style={styles.logoContainer}>
+                    <View style={mainStyles.logoContainer}>
                         <Image source={require('../assets/favicon.png')} resizeMode="contain" />
                     </View>
-                    <Text style={styles.title}>Login to our website</Text>
+                    <Text style={mainStyles.mainTitle}>Login to our website</Text>
                     <FormField
                         title="Email"
                         placeholder="Enter your email here"
@@ -57,14 +63,14 @@ const LoginScreen = () => {
                     <CustomButton
                         title="Sign in"
                         handlePress={handleLogin}
-                        style={{ marginTop: 7 }}
+                        style={{ marginButton: 10 }}
                         isLoading={isLogin}
                     />
-                    <View style={styles.container}>
-                        <Text style={styles.signUpText}>Don't have an account? </Text>
+                    <View style={mainStyles.linkContainer}>
+                        <Text style={mainStyles.signUpText}>Don't have an account? </Text>
                         <Text
                             onPress={() => navigation.navigate('SignUp')}
-                            style={styles.signUpLink}
+                            style={mainStyles.signUpLink}
                         >
                             Sign Up
                         </Text>
@@ -83,12 +89,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    container: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 20,
-    },
+  
     title: {
         fontSize: 23,
         fontWeight: 'bold',

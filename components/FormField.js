@@ -17,7 +17,7 @@ const FormField = ({ title, value, placeholder, handleCheckText, otherStyles, ..
                     onChangeText={handleCheckText}
                     style={styles.textInput}
                     placeholderTextColor="#e1dec8"
-                    secureTextEntry={title === 'Password' && !showPassword}
+                    secureTextEntry={(title === 'Password'||title==='Confirm Password') && !showPassword}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                 />

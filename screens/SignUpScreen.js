@@ -1,19 +1,114 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Alert } from 'react-native';
 import mainStyles from '../mainStyle';
+import FormField from '../components/FormField';
+import CustomButton from '../components/CustomButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { signUp } from '../utils/auth';
+
 const SignUpScreen = () => {
+    const [form, setForm] = useState({ email: '', password: '', name: '', confirmPassword: '' });
+    const [isSign, setIsSign] = useState(false);
+    const navigation = useNavigation();
+
+    const handleSignUp = async () => {
+        if (form.password !== form.confirmPassword) {
+            Alert.alert('Error', 'Passwords do not match');
+            return;
+        }
+
+        if (!form.confirmPassword || !form.email || !form.password || !form.name) {
+            Alert.alert('Error', 'All fields are required');
+            return;
+        }
+
+        setIsSign(true);
+
+        try {
+            const result = await signUp(form.email, form.password);
+
+            if (result.success) {
+                navigation.navigate('Login');
+            } else {
+                Alert.alert('Error', result.message);
+            }
+        } catch (error) {
+            Alert.alert('Error', error.message);
+        } finally {
+            setIsSign(false);
+        }
+    };
+
     return (
-        <View  style={mainStyles.mainContainer}>
-            <Text style= {mainStyles.mainText}>Sign Up Screen</Text>
-            <Button  title="Login" onPress={()=>{
-            }} >Login</Button>
-            <StatusBar style="auto" />
-        </View>
+        <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView  contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+                <View style={mainStyles.mainContainer}>
+                    <View style={mainStyles.logoContainer}>
+                        <Image source={require('../assets/favicon.png')} resizeMode="contain" />
+                    </View>
+                    <Text style={mainStyles.mainTitle}>Welcome to our Website</Text>
+                    <FormField
+                        title="Name"
+                        placeholder="Enter your name"
+                        value={form.name}
+                        handleCheckText={(e) => setForm({ ...form, name: e })}
+                        otherStyles={{ marginBottom: 7 }}
+                    />
+                    <FormField
+                        title="Email"
+                        placeholder="Enter your email"
+                        value={form.email}
+                        handleCheckText={(e) => setForm({ ...form, email: e })}
+                        otherStyles={{ marginBottom: 7 }}
+                        keyboardType="email-address"
+                    />
+                    <FormField
+                        title="Password"
+                        placeholder="Enter your password"
+                        value={form.password}
+                        handleCheckText={(e) => setForm({ ...form, password: e })}
+                        otherStyles={{ marginTop: 7 }}
+                        secureTextEntry={true}
+                    />
+                   <FormField
+    title="Confirm Password"
+    placeholder="Rewrite your password"
+    value={form.confirmPassword}
+    handleCheckText={(e) => setForm({ ...form, confirmPassword: e })}
+    otherStyles={{ marginBottom: 7 }}
+    secureTextEntry={true}  
+/>
+
+                    <CustomButton
+                        title="Sign Up"
+                        handlePress={handleSignUp}
+                        style={{ marginBottom: 10 }}
+                        isLoading={isSign}
+                    />
+                    <View style={mainStyles.linkContainer}>
+                        <Text style={mainStyles.signUpText}>Have an account already?</Text>
+                        <Text
+                            onPress={() => navigation.navigate('Login')}
+                            style={mainStyles.signUpLink}
+                        >
+                            Log In
+                        </Text>
+                    </View>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     );
-}
+};
+
 const styles = StyleSheet.create({
     container: {
-    },
-  });
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 20,
+    }
+});
 
 export default SignUpScreen;
