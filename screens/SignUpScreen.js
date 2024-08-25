@@ -43,12 +43,12 @@ const SignUpScreen = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView  contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
                 <View style={mainStyles.mainContainer}>
                     <View style={mainStyles.logoContainer}>
-                        <Image source={require('../assets/favicon.png')} resizeMode="contain" />
+                        <Image source={require('../assets/Images/122.png')} style={{ height: 200 }} resizeMode='contain' />
                     </View>
-                    <Text style={mainStyles.mainTitle}>Welcome to our Website</Text>
+                    <Text style={mainStyles.mainTitle}>Register on our website</Text>
                     <FormField
                         title="Name"
                         placeholder="Enter your name"
@@ -69,17 +69,17 @@ const SignUpScreen = () => {
                         placeholder="Enter your password"
                         value={form.password}
                         handleCheckText={(e) => setForm({ ...form, password: e })}
-                        otherStyles={{ marginTop: 7 }}
+                        otherStyles={{ marginButton: 7 }}
                         secureTextEntry={true}
                     />
-                   <FormField
-    title="Confirm Password"
-    placeholder="Rewrite your password"
-    value={form.confirmPassword}
-    handleCheckText={(e) => setForm({ ...form, confirmPassword: e })}
-    otherStyles={{ marginBottom: 7 }}
-    secureTextEntry={true}  
-/>
+                    <FormField
+                        title="Confirm Password"
+                        placeholder="Rewrite your password"
+                        value={form.confirmPassword}
+                        handleCheckText={(e) => setForm({ ...form, confirmPassword: e })}
+                        otherStyles={{ marginBottom: 7 }}
+                        secureTextEntry={true}
+                    />
 
                     <CustomButton
                         title="Sign Up"
@@ -88,7 +88,7 @@ const SignUpScreen = () => {
                         isLoading={isSign}
                     />
                     <View style={mainStyles.linkContainer}>
-                        <Text style={mainStyles.signUpText}>Have an account already?</Text>
+                        <Text style={mainStyles.signUpText}>Have an account already ? </Text>
                         <Text
                             onPress={() => navigation.navigate('Login')}
                             style={mainStyles.signUpLink}

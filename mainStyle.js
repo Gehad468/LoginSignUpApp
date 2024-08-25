@@ -23,7 +23,7 @@ const mainStyles = StyleSheet.create({
   },
   signUpLink: {
       textDecorationLine: 'none',
-      color: '#d5cb75',
+      color: '#e0b78d',
   },
   linkContainer: {
     flexDirection: 'row',
@@ -35,13 +35,13 @@ const mainStyles = StyleSheet.create({
     mainTitle: {
         fontSize: 23,
         fontWeight: 'bold',
-        color: '#e1dec8',
+        color: '#fff',
         marginBottom: 20,
     },
     logoContainer: {
       flexDirection: 'row',
-      paddingBottom: 30,
-      paddingTop: 30,
+    //   paddingBottom: 30,
+    //   paddingTop: 30,
       justifyContent: 'center',
       alignItems: 'center',
   },

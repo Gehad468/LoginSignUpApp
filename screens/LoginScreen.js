@@ -12,7 +12,7 @@ const LoginScreen = () => {
     const [form, setForm] = useState({ email: '', password: '' });
     const [isLogin, setIsLogin] = useState(false);
     const navigation = useNavigation();
-    
+
     const handleLogin = async () => {
         if (form.email === '' || form.password === '') {
             Alert.alert('Error', 'Please fill in all the fields');
@@ -21,27 +21,27 @@ const LoginScreen = () => {
 
         const result = await logIn(form.email, form.password);
         setIsLogin(true);
-        try{
+        try {
             setIsLogin(false);
             if (result.success) {
                 navigation.navigate('Home');
             } else {
                 Alert.alert('Error', result.message);
             }
-        
+
         } catch (error) {
             setIsLogin(false);
             Alert.alert('Error', error.message);
 
         }
-          };
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView  contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
                 <View style={mainStyles.mainContainer}>
                     <View style={mainStyles.logoContainer}>
-                        <Image source={require('../assets/favicon.png')} resizeMode="contain" />
+                        <Image source={require('../assets/Images/122.png')} style={{ height: 200 }} resizeMode='contain' />
                     </View>
                     <Text style={mainStyles.mainTitle}>Login to our website</Text>
                     <FormField
@@ -49,7 +49,7 @@ const LoginScreen = () => {
                         placeholder="Enter your email here"
                         value={form.email}
                         handleCheckText={(e) => setForm({ ...form, email: e })}
-                        otherStyles={{ marginTop: 7 }}
+                        otherStyles={{ marginButton: 7 }}
                         keyboardType="email-address"
                     />
                     <FormField
@@ -57,7 +57,7 @@ const LoginScreen = () => {
                         placeholder="Enter your password here"
                         value={form.password}
                         handleCheckText={(e) => setForm({ ...form, password: e })}
-                        otherStyles={{ marginTop: 7 }}
+                        otherStyles={{ marginButton: 7 }}
                         secureTextEntry={true}
                     />
                     <CustomButton
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-  
+
     title: {
         fontSize: 23,
         fontWeight: 'bold',

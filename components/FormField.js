@@ -16,7 +16,7 @@ const FormField = ({ title, value, placeholder, handleCheckText, otherStyles, ..
                     placeholder={placeholder}
                     onChangeText={handleCheckText}
                     style={styles.textInput}
-                    placeholderTextColor="#e1dec8"
+                    placeholderTextColor="rgba(224,183,141,0.5)"
                     secureTextEntry={(title === 'Password'||title==='Confirm Password') && !showPassword}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
@@ -29,7 +29,7 @@ const FormField = ({ title, value, placeholder, handleCheckText, otherStyles, ..
                         <Ionicons
                             name={showPassword ? 'eye-off' : 'eye'}
                             size={20}
-                            color="#aaa"
+                            color="#e0b78d"
                         />
                     </TouchableOpacity>
                 )}
@@ -41,8 +41,6 @@ const FormField = ({ title, value, placeholder, handleCheckText, otherStyles, ..
 const styles = StyleSheet.create({
     container: {
        marginBottom:15,
-
-        
     },
     textInput: {
         color: 'white',
@@ -52,16 +50,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         margin: 6,
-        color: '#e7e3c2',
+        color: '#fff',
     },
     focusedContainer: {
-        borderColor: '#dbfb',
+        borderColor: '#e0b78d',
     },
     inputContainer: {
         flexDirection: 'row',
-        backgroundColor: '#111',
+        backgroundColor: '#161622',
         borderWidth: 1.5,
-        borderColor: '#222',
+        borderColor: 'rgba(224,183,141,0.5)',
         paddingTop: 10,
         paddingBottom: 10,
         paddingHorizontal: 10,
